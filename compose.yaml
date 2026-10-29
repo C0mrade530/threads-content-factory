@@ -1,0 +1,22 @@
+services:
+  api:
+    build: .
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - factory-data:/data
+    ports:
+      - "127.0.0.1:8000:8000"
+    restart: unless-stopped
+  worker:
+    build: .
+    command: ["threads-factory", "worker"]
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - factory-data:/data
+    restart: unless-stopped
+volumes:
+  factory-data:
